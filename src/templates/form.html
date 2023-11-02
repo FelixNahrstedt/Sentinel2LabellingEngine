@@ -1,0 +1,116 @@
+<div class="form-style-3">
+    <form action="{{ url_for('read_form')}}" method="post">
+    </fieldset>
+    <fieldset><legend>Overpass Turbo Query</legend>
+    <label for="field6"><span>Query <span class="required"></span></span><textarea name="Query" class="textarea-field"></textarea></label>
+    </fieldset>
+    <fieldset><legend>Personal</legend>
+    <label for="field1"><span>Name <span class="required"></span></span><input type="text" class="input-field" name="Name" value="Node-Data" placeholder="" /></label><br>
+    <label for="field1"><span>Downloading Date <span class="required"></span></span><input type="date" class="input-field" name="Date" value="" /></label><br>
+    <label for="field2"><span>Node size in m<sup>2</sup><span class="required"></span></span><input type="number" class="input-field" name="NodeSize" value="" /></label><br>
+    <label for="field3"><span>Scaling Factor <span class="required"></span></span><input type="number" class="input-field" name="scalingFactor" value="" /></label><br>
+    <label for="field4"><span>Satellite</span><select name="Satellite" class="select-field">
+    <option value="Appointment">Sentinel-2</option>
+    </select></label>
+    <label><span> </span><input type="submit" value="Submit" /></label>
+    </form>
+    </div>
+
+    <style type="text/css">
+        html{
+            background: #6c9236;
+        }
+        form {
+  text-align: center;
+}
+        .form-style-3{
+            max-width: 450px;
+            margin: 0 auto; /* Add this line to center the form horizontally */
+            font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+        }
+        .form-style-3 label{
+            display:block;
+            margin-bottom: 10px;
+        }
+        .form-style-3 label > span{
+            float: left;
+            width: 100px;
+            color: #6c9236;
+            font-weight: bold;
+            font-size: 13px;
+        }
+        .form-style-3 fieldset{
+            border-radius: 10px;
+            -webkit-border-radius: 10px;
+            -moz-border-radius: 10px;
+            margin: 0px 0px 10px 0px;
+            border: 1px solid #6c9236;
+            padding: 20px;
+            background: #FBE39D;
+            box-shadow: inset 0px 0px 15px #F9D876;
+            -moz-box-shadow: inset 0px 0px 15px #F9D876;
+            -webkit-box-shadow: inset 0px 0px 15px #F9D876;
+        }
+        .form-style-3 fieldset legend{
+            color: #6c9236;
+            border-top: 1px solid #6c9236;
+            border-left: 1px solid #6c9236;
+            border-right: 1px solid #6c9236;
+            border-radius: 5px 5px 0px 0px;
+            -webkit-border-radius: 5px 5px 0px 0px;
+            -moz-border-radius: 5px 5px 0px 0px;
+            background: white;
+            padding: 0px 8px 3px 8px;
+            box-shadow: -0px -1px 2px white;
+            -moz-box-shadow:-0px -1px 2px white;
+            -webkit-box-shadow:-0px -1px 2px white;
+            font-weight: normal;
+            font-size: 12px;
+        }
+        .form-style-3 textarea{
+            width:250px;
+            height:100px;
+        }
+        .form-style-3 input[type=text],
+        .form-style-3 input[type=date],
+        .form-style-3 input[type=datetime],
+        .form-style-3 input[type=number],
+        .form-style-3 input[type=search],
+        .form-style-3 input[type=time],
+        .form-style-3 input[type=url],
+        .form-style-3 input[type=email],
+        .form-style-3 select, 
+        .form-style-3 textarea{
+            border-radius: 3px;
+            -webkit-border-radius: 3px;
+            -moz-border-radius: 3px;
+            border: 1px solid #F9D876;
+            outline: none;
+            color: #6c9236;
+            padding: 5px 8px 5px 8px;
+            box-shadow: inset 1px 1px 4px #F9D876;
+            -moz-box-shadow: inset 1px 1px 4px #F9D876;
+            -webkit-box-shadow: inset 1px 1px 4px #F9D876;
+            background: white;
+            width:50%;
+        }
+        .form-style-3  input[type=submit],
+        .form-style-3  input[type=button]{
+            background: white;
+            border: 1px solid black;
+            padding: 5px 15px 5px 15px;
+            color: black;
+            box-shadow: inset -1px -1px 3px #FBE39D;
+            -moz-box-shadow: inset -1px -1px 3px #FBE39D;
+            -webkit-box-shadow: inset -1px -1px 3px #FBE39D;
+            border-radius: 3px;
+            border-radius: 3px;
+            -webkit-border-radius: 3px;
+            -moz-border-radius: 3px;	
+            font-weight: bold;
+        }
+        .required{
+            color:red;
+            font-weight:normal;
+        }
+        </style>

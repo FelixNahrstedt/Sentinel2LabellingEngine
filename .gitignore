@@ -1,0 +1,29 @@
+# Virtual environment
+myenv/
+
+# Compiled Python files
+__pycache__/
+
+# Logs and other runtime data
+logs/
+*.log
+
+# Environment variables
+.env
+
+# Python bytecode files
+*.pyc
+
+# Cache and package files
+*.cache/
+*.egg-info/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Ignore downloaded data
+data/
+
+# Ignore Docker related files (if you decide to use Docker)
+Dockerfile
+docker-compose.yml
