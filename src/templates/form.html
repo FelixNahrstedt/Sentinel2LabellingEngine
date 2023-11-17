@@ -1,5 +1,5 @@
 <div class="form-style-3">
-    <form action="{{ url_for('read_form')}}" method="post">
+    <form  method="POST" action="/">
     </fieldset>
     <fieldset><legend>Overpass Turbo Query</legend>
     <label for="field6"><span>Query <span class="required"></span></span><textarea name="Query" class="textarea-field"></textarea></label>
@@ -10,9 +10,9 @@
     <label for="field2"><span>Node size in m<sup>2</sup><span class="required"></span></span><input type="number" class="input-field" name="NodeSize" value="" /></label><br>
     <label for="field3"><span>Scaling Factor <span class="required"></span></span><input type="number" class="input-field" name="scalingFactor" value="" /></label><br>
     <label for="field4"><span>Satellite</span><select name="Satellite" class="select-field">
-    <option value="Appointment">Sentinel-2</option>
+    <option value="Sentinel-2">Sentinel-2</option>
     </select></label>
-    <label><span> </span><input type="submit" value="Submit" /></label>
+    <label><span> </span><input type="submit" value="Submit" selected="selected"/></label>
     </form>
     </div>
 

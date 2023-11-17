@@ -1,12 +1,49 @@
-<h1>Hello World</h1>
+<div class="form-style-3">
+    <h1>Data Overview</h1>
+    <form method="POST" action="/get_data">
+    <fieldset><legend>Data Overview</legend>
+    <label for="field1"><span>Name <span class="required"></span></span><div type="text" class="input-field" name="Name" placeholder="">{{name}}</div></label><br>
+    <hr/>
+    <label for="field1"><span>Amount of Nodes<span class="required"></span></span><div type="date" class="input-field" name="Date"  >{{nodeLen}}</div></label><br>
+    <hr/>
+    <label for="field2"><span>Satellite Image Size in m<sup>2</sup><span class="required"></span></span><div type="number" class="input-field" name="NodeSize" >{{img_size}}</div></label><br>
+    <hr/>
+    <label for="field2"><span>Satellite<span class="required"></span></span><div type="number" class="input-field" name="NodeSize" >{{satellite}}</div></label><br>
+    <hr/>
+    <label><span> </span><input type="submit" value="Get Satellite Data" /></label>
+    </form>
+    </div>
+    <div class="image-container">
+    <img src="{{ url_for('static', filename='images/Bounding_boxes_Test.png') }}" class="image" />
+</div>
+
 
 
 <style type="text/css">
+  hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 1em 0;
+    padding: 0;
+}
+  h1{margin: 0 auto;text-align: center;
+}
     html{
         background: #6c9236;
     }
     form {
 text-align: center;
+}
+.image-container {
+  text-align: center;
+}
+.image {
+  max-width: 50%; /* Adjust this as needed */
+  max-height: 50vh; /* Limit the image height if necessary */
+  display: block;
+  margin: 0 auto; /* Center the image horizontally */
 }
     .form-style-3{
         max-width: 450px;
