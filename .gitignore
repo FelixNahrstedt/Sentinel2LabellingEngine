@@ -22,9 +22,9 @@ logs/
 .ipynb_checkpoints/
 
 # Ignore downloaded data
-data/COCO
-data/Downoads
-data/Images
+data/COCO/
+data/Downoads/
+data/Images/
 
 
 # Ignore Docker related files (if you decide to use Docker)
