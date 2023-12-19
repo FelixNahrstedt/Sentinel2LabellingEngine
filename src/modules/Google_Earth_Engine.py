@@ -10,6 +10,8 @@ from geetools import batch
 import urllib.parse
 import utm
 from Meta_Information import Data_Management
+from helper_functions import get_coordinates_square
+from shapely import Point
 
 class EarthEngineDownloader:
     def __init__(self,information:Data_Management,ids:list):
@@ -48,8 +50,6 @@ class EarthEngineDownloader:
         except Exception as e:
             print(f"Error running the Earth Engine Authentication: {e}")
             try:
-                print("\n\nhello world\n\n")
-
                 nonces = ['request_id', 'token_verifier', 'client_verifier']
                 request_info = self._nonce_table(*nonces)
                 AUTH_PAGE_URL = 'https://code.earthengine.google.com/client-auth'
@@ -59,7 +59,6 @@ class EarthEngineDownloader:
                 ]
                 AUTH_URL_TEMPLATE = AUTH_PAGE_URL + '?scopes={scopes}' + (
                     '&request_id={request_id}&tc={token_challenge}&cc={client_challenge}')
-                print("hello")
                 url = AUTH_URL_TEMPLATE.format(
                     scopes=urllib.parse.quote(' '.join(SCOPES)), **request_info)
                 code_verifier = ':'.join(request_info[k] for k in nonces)
@@ -74,33 +73,32 @@ class EarthEngineDownloader:
                 print(f"Error running the Bash script: {e}")
                 print("Please ensure that you have Google Cloud SDK and Earth Engine set up.")
 
-    def get_coordinates_square(self, latitude, longitude, image_size_in_m):
-        """
-        Given a latitude and a longitude, return a square of size `image_size_in_m` of coordinates.
+    # def get_coordinates_square(self, latitude, longitude, image_size_in_m):
+    #     """
+    #     Given a latitude and a longitude, return a square of size `image_size_in_m` of coordinates.
 
-        Parameters:
-        - latitude: Latitude of the center point.
-        - longitude: Longitude of the center point.
-        - image_size_in_m: Size of the square in meters.
+    #     Parameters:
+    #     - latitude: Latitude of the center point.
+    #     - longitude: Longitude of the center point.
+    #     - image_size_in_m: Size of the square in meters.
 
-        Returns:
-        A list containing coordinates in GeoJSON format and a list of bounding box coordinates.
-        """
-        half_size = image_size_in_m / 2
-        easting, northing, zone_number, zone_letter = utm.from_latlon(latitude, longitude)
-        slat = utm.to_latlon(easting - half_size, northing - half_size, zone_number, zone_letter)
-        wlon = utm.to_latlon(easting - half_size, northing + half_size, zone_number, zone_letter)
-        nlat = utm.to_latlon(easting + half_size, northing + half_size, zone_number, zone_letter)
-        elon = utm.to_latlon(easting + half_size, northing - half_size, zone_number, zone_letter)
+    #     Returns:
+    #     A list containing coordinates in GeoJSON format and a list of bounding box coordinates.
+    #     """
+    #     half_size = image_size_in_m / 2
+    #     easting, northing, zone_number, zone_letter = utm.from_latlon(latitude, longitude)
+    #     slat = utm.to_latlon(easting - half_size, northing - half_size, zone_number, zone_letter)
+    #     wlon = utm.to_latlon(easting - half_size, northing + half_size, zone_number, zone_letter)
+    #     nlat = utm.to_latlon(easting + half_size, northing + half_size, zone_number, zone_letter)
+    #     elon = utm.to_latlon(easting + half_size, northing - half_size, zone_number, zone_letter)
 
-        coordinates_geojson = [
-            [wlon[1], nlat[0]], [elon[1], nlat[0]],
-            [elon[1], slat[0]], [wlon[1], slat[0]]
-        ]
-
-        bounding_box = [wlon[1], slat[0], elon[1], nlat[0]]
-
-        return coordinates_geojson, bounding_box
+    #     coordinates_geojson = [
+    #         [wlon[1], nlat[0]], [elon[1], nlat[0]],
+    #         [elon[1], slat[0]], [wlon[1], slat[0]]
+    #     ]
+    #     # [Northwestern Longitude, Southwestern Latitude, Southeastern Longitude, Northeastern Latitude]
+    #     bounding_box = [wlon[1], slat[0], elon[1], nlat[0]]
+    #     return coordinates_geojson, bounding_box
 
     def get_scenes_and_rectangles(self):
         """
@@ -118,7 +116,8 @@ class EarthEngineDownloader:
         rectangles = []
 
         for i in range(len(self.information.longitude_list)):
-            coordinates_square = self.get_coordinates_square(self.information.longitude_list[i], self.information.latitude_list[i], image_size_in_m=self.information.patch_size)
+            coordinates_square = get_coordinates_square(Point([self.information.longitude_list[i], self.information.latitude_list[i]]), self.information.patch_size)
+            
             scene.append(coordinates_square[0])
             rectangles.append(coordinates_square[1])
 
@@ -140,7 +139,7 @@ class EarthEngineDownloader:
         Returns:
         A list of Sentinel-2 images and the number of images available.
         """
-        patch = ee.Geometry.Rectangle(self.rectangles[number_of_scene])
+        patch = ee.Geometry.Rectangle(self.rectangles[number_of_scene],proj="EPSG:4326")
         dataset = ee.ImageCollection("COPERNICUS/S2")\
             .filterBounds(patch)\
             .filterDate(self.information.start_dates[number_of_date], self.information.end_dates[number_of_date])\
@@ -151,7 +150,6 @@ class EarthEngineDownloader:
         available_images = dataset.getInfo()
         data = dataset.toList(dataset.size())
         length = len(available_images['features'])
-
         self.s2data = data
 
         return length
@@ -177,7 +175,7 @@ class EarthEngineDownloader:
                 image.select(self.information.s2_bands)
                 name = image.id().getInfo()
                 acquisition_date = image.date().format('YYYY-MM-dd').getInfo()
-                batch.image.toLocal(image, name=name, path=self.information.download_path, scale=10, region=self.scenes[number_of_scene], toFolder=True)
+                batch.image.toLocal(image, name=name, path=self.information.download_path, region=self.scenes[number_of_scene], toFolder=True)
                 #print(f'          * Zone {zone_name}, period: {date}, img: {i} of {n_images}')
                 downloaded_image += 1
             except Exception:

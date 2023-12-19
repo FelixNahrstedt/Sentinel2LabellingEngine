@@ -27,7 +27,7 @@ class Satellite_Downloader:
 
         return id
 
-    def __find(self):
+    def __find_ids(self):
         """
         Returns the paths of files contained in a directory, excluding 'ini' files.
 
@@ -56,13 +56,13 @@ class Satellite_Downloader:
         Raises:
         - Exception: An exception is caught and printed if there is an issue during the extraction process.
         """
-        names = self.__find()
+        names = self.__find_ids()
 
         for i in range(len(names)):
             if not ('.zip' in names[i]):
                 shutil.rmtree(names[i])
 
-        names = self.__find()
+        names = self.__find_ids()
 
         # It tries to extract all the downloaded image into a folder
         for i in range(len(names)):

@@ -20,11 +20,15 @@ class Data_Management:
     def __init__(
             self,
             points_path: str = "",
+            file_path_filtered_json:str = "",
             start_dates: list[str] = [""],
             end_dates: list[str] = [""],
             patch_size: int = 0,
             windows: bool = True,
+            get_OSM_nodes:bool = True,
+            download_img:bool = True,
             convert_s2: bool = False,
+            create_dataset:bool = False,
             base_path: str = '../data/',
             n_of_scene: int = 20,
             n_images: int = 1,
@@ -63,16 +67,18 @@ class Data_Management:
         """
 
         if not self.__initialized:
+            self.points_path =points_path
             self.windows = windows
             self.convert_s2 = convert_s2
             self.remove = remove
-            self.points = self.__get_points(points_path)
-            self.latitude_list = self.points[1, :]
-            self.longitude_list = self.points[0, :]
             self.satellites = satellites
+            self.file_path_filtered_json = file_path_filtered_json
             self.start_dates = start_dates
             self.end_dates = end_dates
+            self.download_img = download_img
+            self.get_OSM_nodes = get_OSM_nodes
             self.date_names = date_names
+            self.create_dataset = create_dataset
             self.n_images = n_images
             self.s2_bands = s2_bands
             self.s1_bands = s1_bands
@@ -103,7 +109,6 @@ class Data_Management:
         - points (numpy.ndarray): A NumPy array containing latitude and longitude points.
         """
         data_frame = pd.read_csv(points_path, index_col=0)
-        print(data_frame.head())
         data = data_frame.reset_index().to_numpy()
 
         num_points = len(data)
@@ -113,11 +118,14 @@ class Data_Management:
             points[0, i] = data[i][1]
             points[1, i] = data[i][2]
             points[2, i] = data[i][0]
-        print(points[2,3])
         
         return points
-
-
+    
+    def set_filepath_filtered_json(self,filepath):
+        self.file_path_filtered_json = filepath
+        self.points = self.__get_points(self.points_path)
+        self.latitude_list = self.points[1, :]
+        self.longitude_list = self.points[0, :]
 
 
 

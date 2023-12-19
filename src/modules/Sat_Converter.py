@@ -1,15 +1,19 @@
 import os
 import shutil
 import time
+import cv2
 import rasterio
 import numpy as np
 import matplotlib.pyplot as plt
+from collections import Counter
+from rasterio.transform import from_origin
+from rasterio.enums import Resampling
 
 class Sentinel2Converter:
     def __init__(self):
         pass
 
-    def to_png(self, path_tif: str, bands: list[str], image_dir: str, remove=False):
+    def to_png(self, path_tif: str, bands: list[str], image_dir: str, remove=False,variability_threshhold=1):
         """
         Visualize Sentinel-2 RGB images and save them as PNG files.
 
@@ -30,9 +34,37 @@ class Sentinel2Converter:
         for file in tiff_files:
             files = [rasterio.open(f'{file[0]}.{band}.tif') for band in bands]
             red, green, blue = self._normalize_bands(files)
+            # Split the RGB image into red, green, and blue channels
             rgb_image = np.stack((red, green, blue), axis=-1)
+            if(variability_threshhold != 0):
+              
+                
+                # Step 2: Reshape the image array and count pixel occurrences
+                pixels = rgb_image.reshape(-1, 3)
+                color_counts = Counter(map(tuple, pixels))
 
-            self._display_and_save_image(rgb_image, file[1])
+                # Step 3: Calculate percentages
+                total_pixels = len(pixels)
+                color_percentages = {color: count / total_pixels * 100 for color, count in color_counts.items()}
+
+                # Find the most dominant color
+                color_percent_tuples = color_counts.most_common(1)[0:3]
+                include = True
+                for tuples in color_percent_tuples:
+                    most_dominant_color, most_dominant_count = tuples
+                    most_dominant_percentage = most_dominant_count / total_pixels * 100
+                    if(most_dominant_percentage>variability_threshhold or most_dominant_color==(0,0,0)):
+                        print(f"excluded one image cut that filled {most_dominant_percentage}% of the image")
+                        include=False
+                #print("color: ", most_dominant_color)
+                
+                # if overall_color_variance>=100: 
+                if(include):
+                    cv2.imwrite(file[1], rgb_image)
+            else: 
+                cv2.imwrite(file[1], rgb_image)
+              
+            #self._display_and_save_image(rgb_image, file[1])
 
     def to_geoTiff(self, path_tif: str, bands: list[str], image_dir: str, remove=False):
         """
@@ -54,10 +86,11 @@ class Sentinel2Converter:
 
         for file in tiff_files:
             #loaded = [rasterio.open(f'{file[0]}.{band}.tif') for band in bands]
-
+            extra_data = []
             files = [f'{file[0]}.{band}.tif' for band in bands]
             with rasterio.open(files[0]) as src0:
                 meta = src0.meta
+                extra_data = [src0.crs, src0.transform, src0.width, src0.height,src0.bounds]
             # Update meta to reflect the number of layers
             meta.update(count = len(files))
             # Read each layer and write it to stack
@@ -74,9 +107,12 @@ class Sentinel2Converter:
         Parameters:
         - image_dir (str): The directory path containing images to be removed.
         """
-        shutil.rmtree(image_dir)
-        time.sleep(1)
-        os.makedirs(image_dir)
+        try:
+            shutil.rmtree(image_dir)
+            time.sleep(1)
+            os.makedirs(image_dir)
+        except:
+            os.makedirs(image_dir)
 
     def _identify_tiff_files(self, path_tif, image_dir):
         """
@@ -124,10 +160,13 @@ class Sentinel2Converter:
         - rgb_image: The RGB image to be displayed and saved.
         - file_path (str): The file path to save the image.
         """
-        plt.figure(figsize=(10, 10))
-        plt.imshow(rgb_image)
-        plt.savefig(file_path)
-        plt.close('all')
+        fig = plt.figure(frameon=False)
+        ax = plt.Axes(fig, [0., 0., 1., 1.])
+        ax.set_axis_off()
+        fig.add_axes(ax)
+        ax.imshow(rgb_image, aspect='auto')
+        fig.savefig(file_path, bbox_inches='tight', pad_inches=0)
+        plt.close(fig)
 
 # Example usage:
 # visualizer = Sentinel2Visualizer()
