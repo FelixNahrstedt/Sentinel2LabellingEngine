@@ -1,24 +1,12 @@
 import datetime
-import math
 import os
 import json
-import glob
-import time
-from timeit import Timer
 import fiftyone as fo
-import numpy as np
 import rasterio
 from shapely.geometry import Point
 from helper_functions import get_coordinates_square
 import geopandas as gpd
-from decimal import Decimal, getcontext
-from shapely import Polygon
-import geopandas as gpd
-import utm
-import geopy.distance as gp
-from pyproj import Proj, transform
 from pyproj import Transformer
-from PIL import Image 
 from math import radians, cos, sin, asin, sqrt
 
 
