@@ -1,4 +1,6 @@
 # General Windows setup and start
+![Labelled COCO Vestas Wind](./src/static/Fiftyone_example.png "Labelled COCO Dataset after using this Workflow")
+
 <pre>
 Prerequirements: Python (was tested for > 3.9) and Pip
 </pre>
@@ -43,6 +45,7 @@ python modules/main.py
 </kbd>
 
 &nbsp; 
+![Example Vestas Wind](./src/static/Vestas_Wind_example.png "Example Output for Vestas Wind Turbines in the Netherlands")
 # make a config file for running your own queries
 <pre>
 -> Create a new python file within the src/modules/config folder
@@ -94,6 +97,13 @@ out body;
 20. make_bounding_box_image (boolean) ``` if you want to create an image of the bounding boxes needed for the search```
 21. bounding_box_image_path ```where you want to save it```
 
+# System Specifications
+## Workflow
+![Labelled COCO Vestas Wind](./src/static/workflow.png "Labelled COCO Dataset after using this Workflow" )
+## Usecase
+![Labelled COCO Vestas Wind](./src/static/Usecase.png "Labelled COCO Dataset after using this Workflow")
+## Class 
+![Labelled COCO Vestas Wind](./src/static/class.png "Labelled COCO Dataset after using this Workflow")
 
 # ------- DOCKER --------
 ## Build Docker 
