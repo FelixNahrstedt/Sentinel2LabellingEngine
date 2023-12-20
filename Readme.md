@@ -4,6 +4,16 @@ Prerequirements: Python (was tested for > 3.9) and Pip
 ```
 git clone <repository_url>
 ```
+## Optional: Create Virtual Environment for local dependencies (Windows):
+```
+pip install virtualenv
+```
+```
+python -m venv venv
+```
+```
+venv\Scripts\activate
+```
 ## Install Project Dependencies 
 ```
 pip install -r requirements.txt
