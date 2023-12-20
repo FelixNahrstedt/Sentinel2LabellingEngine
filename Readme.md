@@ -1,6 +1,8 @@
-# General Windows setup and start
+# Sentinel-2 & OSM - Automatic Labelling Engine
+
 ![Labelled COCO Vestas Wind](./src/static/Fiftyone_example.png "Labelled COCO Dataset after using this Workflow")
 
+# General Windows setup and start
 <pre>
 Prerequirements: Python (was tested for > 3.9) and Pip
 </pre>
