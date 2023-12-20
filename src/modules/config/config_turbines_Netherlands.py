@@ -12,7 +12,7 @@ out center;'''
 # If OSM Nodes need to be downloaded and coordinates need to be searched
 get_OSM_nodes = True
 # if the satellite images are to be downloaded with Google Earth Engine
-download_img = False
+download_img = True
 # if the satellite tif bands should be converted to GeoTif and PNG images
 convert_s2=True
 # if a coco dataset should be created from the png images

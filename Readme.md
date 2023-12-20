@@ -23,6 +23,7 @@ pip install -r requirements.txt
 Install Google Cloud CLI for GEE to work without docker:
 see https://cloud.google.com/sdk/docs/install
 
+## Fiftyone Desktop - (should also work through requirements installation already)
 Install fiftyone Desktop to use the desktop version - this is only necessery if you want to visualize the resulting COCO dataset with the fiftyone app. 
 ```
 pip install "fiftyone[desktop]"
