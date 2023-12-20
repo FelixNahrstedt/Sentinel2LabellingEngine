@@ -2,7 +2,7 @@
 
 ![Labelled COCO Vestas Wind](./src/static/Fiftyone_example.png "Labelled COCO Dataset after using this Workflow")
 
-# General Windows setup and start
+# Setup and start (Windows)
 <pre>
 Prerequirements: Python (was tested for > 3.9) and Pip
 </pre>
@@ -48,7 +48,8 @@ python modules/main.py
 
 &nbsp; 
 ![Example Vestas Wind](./src/static/Vestas_Wind_example.png "Example Output for Vestas Wind Turbines in the Netherlands")
-# make a config file for running your own queries
+
+# Rrunning your own queries
 <pre>
 -> Create a new python file within the src/modules/config folder
 -> specifiy the variables 
@@ -57,11 +58,11 @@ python modules/main.py
 
 <span style="color:red">All variables have to be set</span>
 
-## Variables to specify: 
-1.  query
+### General Variables: 
+1.  query (string)
 -  A valid NODE ONLY query in Open street map. Test under the following link: https://overpass-turbo.eu/
 
-Example: All Lighthouse nodes in Sweden
+- Example: All Lighthouse nodes in Sweden
 ```json
 [out:json];
 area["ISO3166-1"="SE"]["admin_level"="2"]->.searchArea;
@@ -79,25 +80,25 @@ out body;
 4. convert_s2 (boolean)```if the satellite tif bands should be converted to GeoTif and PNG images```
 5. create_dataset (boolean)```if a coco dataset should be created from the png images```
 
-### General Specification:
-6. Image_Size ```Specify the size of the Image to be downloaded in meters```
-7. Object_Size ```Specify the size of the Objects that are supposed to be labelled in meters```
-8. filename ```Filename for Image Consistency```
-9. element_name ```Name of the Object to be labelled```
+### Specification Variables:
+6. Image_Size (int) ```Specify the size of the Image to be downloaded in meters```
+7. Object_Size (int) ```Specify the size of the Objects that are supposed to be labelled in meters```
+8. filename (string) ```Filename for Image Consistency```
+9. element_name (string) ```Name of the Object to be labelled```
 10. remove (boolean) ``` if the image folder should be removed if there is one ```
-11. n_of_scene ```ow many images in total do you want to download (set to 0 if all available should be downloaded)```
-12. n_images ```from how many different dates the images are supposed to be downloaded```
+11. n_of_scene (int) ```ow many images in total do you want to download (set to 0 if all available should be downloaded)```
+12. n_images (int) ```from how many different dates the images are supposed to be downloaded```
 
 ### Additional Variables:
-13. cloud_percentage ```how big the maximum cloud fraction should be present within an image```
-14. variability_threshhold ```how big the allowed color variablility is within the image (can be set to exclude image borders and sensor mistakes)```
-15. start_dates ```start dates for the image request```
-16. end_dates ```end dates for the image request```
-17. csv_file_path ```filepath for saving coordinates from OSM```
-18. filePath ```filepath for saving the buffered coordinates after coordinate search```
+13. cloud_percentage (double) ```[0-1] how big the maximum cloud fraction should be present within an image```
+14. variability_threshhold (int) ```how big the allowed color variablility is within the image (can be set to exclude image borders and sensor mistakes)```
+15. start_dates ([string]) ```FORMAT: ['2019-01-01'] - yyyy-mm-dd - start dates for the image request```
+16. end_dates ([string]) ```FORMAT: ['2019-12-01'] - yyyy-mm-dd - end dates for the image request```
+17. csv_file_path (string) ```filepath for saving coordinates from OSM```
+18. filePath (string) ```filepath for saving the buffered coordinates after coordinate search```
 19. get_way_centers (boolean) ```if you use way centers - still in testing ```
 20. make_bounding_box_image (boolean) ``` if you want to create an image of the bounding boxes needed for the search```
-21. bounding_box_image_path ```where you want to save it```
+21. bounding_box_image_path (string) ```where you want to save it```
 
 # System Specifications
 ## Workflow
