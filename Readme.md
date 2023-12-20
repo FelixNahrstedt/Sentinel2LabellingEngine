@@ -1,5 +1,4 @@
 # General Windows setup and start
-<kbd>
 <pre>
 Prerequirements: Python (was tested for > 3.9) and Pip
 </pre>
