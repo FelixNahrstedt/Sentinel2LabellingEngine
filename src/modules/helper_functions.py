@@ -1,16 +1,6 @@
 import math
-import pyproj
-import utm
-from shapely.geometry import Point, Polygon
-from math import radians, sin, cos, sqrt, asin, degrees
-from pyproj import Transformer
-from shapely.ops import transform
-from functools import partial
-import geopy as gp
-import geopy.distance as geoDist
-from pyproj import CRS, Transformer
 from shapely.geometry import Point
-from shapely.ops import transform
+from shapely.geometry import Point
 # Distances are measured in kilometers
 # Longitudes and latitudes are measured in degrees
 # Earth is assumed to be perfectly spherical

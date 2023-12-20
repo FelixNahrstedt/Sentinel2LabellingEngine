@@ -1,14 +1,10 @@
 import base64
 import hashlib
-import math
 import os
 import subprocess
-from time import sleep
-import webbrowser
 import ee
 from geetools import batch
 import urllib.parse
-import utm
 from Meta_Information import Data_Management
 from helper_functions import get_coordinates_square
 from shapely import Point

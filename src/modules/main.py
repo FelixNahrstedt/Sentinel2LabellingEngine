@@ -5,7 +5,6 @@ from Sat_Converter import Sentinel2Converter
 from OSM_Query import OSM_Downloader
 from Sat_Downloader import Satellite_Downloader
 from Coco_Dataset import DatasetCreator
-import time
 
 # replace name for name of your config file
 from config.config_turbines_Netherlands import query, Image_Size, Object_Size, filename, element_name, csv_file_path, filePath, get_way_centers, start_dates, end_dates, remove, n_of_scene, n_images, cloud_percentage, variability_threshhold, get_OSM_nodes, download_img, convert_s2, create_dataset,make_bounding_box_image,bounding_box_image_path

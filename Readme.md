@@ -30,7 +30,7 @@ pip install "fiftyone[desktop]"
 
 3. Navigate into the src folder 
 ```
-cd /src
+cd src
 ```
 4. Start code with the following comand: 
 ```

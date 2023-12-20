@@ -6,8 +6,6 @@ import rasterio
 import numpy as np
 import matplotlib.pyplot as plt
 from collections import Counter
-from rasterio.transform import from_origin
-from rasterio.enums import Resampling
 
 class Sentinel2Converter:
     def __init__(self):

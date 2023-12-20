@@ -2,7 +2,6 @@ import os
 import shutil
 from zipfile import ZipFile
 from glob import glob
-from time import sleep
 from Meta_Information import Data_Management
 from Google_Earth_Engine import EarthEngineDownloader
 

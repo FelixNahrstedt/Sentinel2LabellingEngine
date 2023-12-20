@@ -3,11 +3,8 @@ import requests
 import json
 from rtree import index as myindex
 import matplotlib.pyplot as plt
-import math
-import utm
 import csv
 from shapely.geometry import Point, Polygon
-import time
 from helper_functions import get_coordinates_square
 
 class OSM_Downloader:
@@ -67,15 +64,12 @@ class OSM_Downloader:
             csv_writer = csv.writer(csv_file)
             csv_writer.writerow(["index", "latitude", "longitude"])  # Write the header row
             csv_writer.writerows(csv_data)  # Write the data rows
-        start_time_cs = time.time()
         filePath= self.search_coordinates(updated_json, Image_size,element_size, filename, label,make_bounding_box_image,bounding_box_image_path)
-        end_time_cs = time.time()
-        total_execution_time = end_time_cs - start_time_cs
         json_file_path = f"../data/OSM-{filename}.json"
         with open(json_file_path, 'w') as json_file:
             json.dump(nodes, json_file, indent=4)
 
-        return len(nodeList),csv_file_path,json_file_path,filePath,total_execution_time
+        return len(nodeList),csv_file_path,json_file_path,filePath,
     
     def check_bounds(self,buffer:Polygon, point:Point):
         in_buffer = buffer.contains_properly(point)
